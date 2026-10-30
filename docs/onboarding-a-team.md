@@ -15,7 +15,9 @@ About an hour for the team lead, then about 15 minutes per person.
 2. Copy everything in `workspace-template/` into it, including the hidden `.claude/`, `.mcp.json` and
    `.gitignore`. Replace `[Team name]` in README.md.
 3. If the team's Storyblok MCP server is not the hosted one, change `.mcp.json`. Keep the server name
-   `Storyblok`, because the agents' tool lists use it.
+   `Storyblok`, because the agents' tool lists and the workspace permissions use it. This is the only
+   supported connection in Claude Code: people should switch off any Storyblok connector they added in the
+   Claude app or on claude.ai, whose tools are named differently and aren't covered by those rules.
 4. Commit and push.
 
 ## 3. Set up each person

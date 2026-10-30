@@ -1,6 +1,6 @@
 {
   "name": "content-team",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "description": "A seven-agent CMS content team: plans, designs, writes, reviews, mocks up and saves draft pages in the CMS from existing components. CMS-agnostic, one knowledge folder per project, drafts only, never publishes.",
   "author": {
     "name": "Isaac Tay"

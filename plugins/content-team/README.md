@@ -41,17 +41,24 @@ enables the plugin. In Claude Code the agents are named `content-team:<agent>`.
 - A safety check (hooks/guard-cms-writes.py) runs before every write, delete or upload call on any
   connected server, including Storyblok connectors whose tools are named by an ID. It allows only
   `createStory` / `updateStory` without publish, force-update, AI-translate or per-language publish options, and blocks publishing, deleting, asset uploads and
-  component or settings changes. It fails closed.
+  component or settings changes. It fails closed. Every draft save it allows still shows the user a
+  confirmation prompt (labelled `[plugin:content-team]`), whatever the server is called.
+- The workspace template's permission rules back this up: draft saves ask and deletes and uploads are
+  denied on any server (`mcp__*__execute_mutating`, `mcp__*__execute_destructive`, `mcp__*__upload_asset*`),
+  so they also cover connectors named by an ID. Reads are pre-approved only for the `Storyblok` server,
+  because allow rules can't use a wildcard for the server name.
 - If the connector is read-only, the CMS Operator writes `change-sheet.md` for a human to paste instead.
 
 ## Requirements
 
 - Claude Code (opened in a team workspace folder) or Cowork (with a connected folder). The workspace holds one
   subfolder per project with a project.md (see the content-team-rules skill and workspace-template/ in the repo).
-- A Storyblok MCP server named `Storyblok`: in Claude Code, the workspace's `.mcp.json`; in Cowork, the Storyblok connector (Settings → Connectors). Agent tool lists use the names
-  `mcp__Storyblok__search`, `…__describe`, `…__execute_readonly`, `…__execute_mutating`. If your connector
-  appears under a different name, the Strategist, Librarian and Operator will report missing CMS tools:
-  update the `tools:` line in their agent files.
+- A Storyblok MCP server named `Storyblok`: in Claude Code, the workspace's `.mcp.json` (the only supported
+  connection; switch off any Storyblok connector added in the Claude app or on claude.ai); in Cowork, the
+  Storyblok connector (Settings → Connectors). Agent tool lists and the workspace permissions use the names
+  `mcp__Storyblok__search`, `…__describe`, `…__execute_readonly`, `…__execute_mutating`. If the CMS tools
+  appear under any other name (for example a connector named by an ID), the workflows stop and ask you to
+  fix the connection instead of using them.
 - python3 for the safety check (if missing, all CMS writes are blocked).
 
 ## Swapping CMS

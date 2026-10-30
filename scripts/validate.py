@@ -80,11 +80,17 @@ for entry in mp.get("plugins", []):
         ("mcp__Storyblok__execute_destructive", {"operation": "deleteStory"}, 2),
         ("mcp__Storyblok__upload_asset", {}, 2),
         ("mcp__68a2506e-d22d__execute_destructive", {"operation": "deleteStory"}, 2),
+        ("mcp__68a2506e-d22d__execute_mutating", {"operation": "createStory", "parameters": {"story": {"name": "x"}}}, 0),
+        ("mcp__68a2506e-d22d__execute_mutating", {"operation": "updateStory", "parameters": {"publish": "1"}}, 2),
     ]
     for tool, inp, want in cases:
         r = subprocess.run([sys.executable, str(guard)], input=json.dumps({"tool_name": tool, "tool_input": inp}),
                            capture_output=True, text=True)
         if r.returncode != want: err(f"safety check: {tool} {inp.get('operation','')} returned {r.returncode}, expected {want}")
+        elif want == 0 and tool.endswith("execute_mutating"):  # allowed draft saves must still ask the user
+            try: decision = json.loads(r.stdout)["hookSpecificOutput"]["permissionDecision"]
+            except Exception: decision = None
+            if decision != "ask": err(f"safety check: {tool} {inp.get('operation','')} must return permissionDecision 'ask', got {decision}")
     r = subprocess.run([sys.executable, str(guard)], input="not json", capture_output=True, text=True)
     if r.returncode != 2: err("safety check: unreadable input must be blocked (fail closed)")
 
@@ -96,6 +102,13 @@ for n in names:
     if not ws.get("enabledPlugins", {}).get(f"{n}@{mpname}"): err(f"workspace-template settings: {n}@{mpname} not enabled")
 load_json(ROOT / "workspace-template/.mcp.json")
 if (ROOT / "workspace-template/.claude/settings.local.json").exists(): err("workspace-template must not contain settings.local.json")
+# Wildcard server names, so the rules also match connectors named by an ID
+DENY_ANY = {"mcp__*__execute_destructive", "mcp__*__upload_asset", "mcp__*__upload_asset_finish"}
+perms = ws.get("permissions", {})
+if not DENY_ANY <= set(perms.get("deny", [])): err(f"workspace-template settings: deny must include {sorted(DENY_ANY)}")
+if "mcp__*__execute_mutating" not in perms.get("ask", []): err("workspace-template settings: ask must include mcp__*__execute_mutating")
+ms = load_json(ROOT / "docs/managed-settings.example.json") or {}
+if not DENY_ANY <= set(ms.get("permissions", {}).get("deny", [])): err(f"managed-settings example: deny must include {sorted(DENY_ANY)}")
 
 if errors:
     print("Validation failed:"); [print(" -", e) for e in errors]; sys.exit(1)
