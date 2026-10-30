@@ -102,6 +102,12 @@ for n in names:
     if not ws.get("enabledPlugins", {}).get(f"{n}@{mpname}"): err(f"workspace-template settings: {n}@{mpname} not enabled")
 load_json(ROOT / "workspace-template/.mcp.json")
 if (ROOT / "workspace-template/.claude/settings.local.json").exists(): err("workspace-template must not contain settings.local.json")
+# The template's CLAUDE.md names the plugin version it was written for, so teams can tell when their copy is behind
+ws_claude = (ROOT / "workspace-template/CLAUDE.md").read_text() if (ROOT / "workspace-template/CLAUDE.md").exists() else ""
+tv = re.search(r"^Template version: content-team (\S+)$", ws_claude, re.M)
+ct_ver = (load_json(ROOT / "plugins/content-team/.claude-plugin/plugin.json") or {}).get("version")
+if not tv: err("workspace-template/CLAUDE.md: missing 'Template version: content-team x.y.z' line")
+elif tv.group(1) != ct_ver: err(f"workspace-template/CLAUDE.md: template version {tv.group(1)} != plugin version {ct_ver}")
 # Wildcard server names, so the rules also match connectors named by an ID
 DENY_ANY = {"mcp__*__execute_destructive", "mcp__*__upload_asset", "mcp__*__upload_asset_finish"}
 perms = ws.get("permissions", {})
