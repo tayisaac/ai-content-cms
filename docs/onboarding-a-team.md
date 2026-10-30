@@ -40,4 +40,7 @@ prompt and the plugin, sign in to Storyblok, run the two checks (agents listed; 
 - Commit `runs/` folders: they are the audit trail of who approved what.
 - Get updates with `/plugin marketplace update aicontentteam` (or turn on auto-update in `/plugin` →
   Marketplaces).
+- Plugin updates don't change your workspace's `CLAUDE.md`. Compare its `Template version` line with the
+  latest release in `CHANGELOG.md`. If yours is older, replace everything above its "Team notes" section with
+  the new `workspace-template/CLAUDE.md`, and keep your Team notes as they are.
 - Report problems or ideas as issues on `tayisaac/ai-content-cms`.

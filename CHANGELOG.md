@@ -3,6 +3,17 @@
 Each release bumps `version` in `plugins/<plugin>/.claude-plugin/plugin.json`. Users only receive a release
 when that version changes.
 
+## content-team 0.1.10 (2026-10-30)
+- Workspace template's CLAUDE.md rewritten into four sections: Folders, Sources, Never, and If a file cannot
+  be read. The Never rules apply even when the user asks otherwise. When a file can't be read, Claude stops
+  and explains instead of guessing, says which part of a partly read file it used, and covers read-only CMS
+  connections and a missing python3.
+- The file says the `content-team-rules` skill wins if the two disagree, starts with a
+  `Template version: content-team x.y.z` line (validate.py checks it matches plugin.json), and ends with a
+  Team notes section that teams keep when updating.
+- Existing workspaces: copy the new `workspace-template/CLAUDE.md` into your workspace by hand (see
+  docs/onboarding-a-team.md). Plugin agents and skills are unchanged.
+
 ## content-team 0.1.9 (2026-10-30)
 - Safety check asks the user to confirm every draft save it allows (`[plugin:content-team]` prompt), so the
   prompt appears even when Storyblok is connected under another name, such as a connector named by an ID,

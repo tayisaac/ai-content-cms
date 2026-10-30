@@ -18,7 +18,9 @@ behaviour, make it configurable through `project.md` instead.
 1. Branch, make the change in `plugins/content-team/`.
 2. Bump `version` in `plugins/content-team/.claude-plugin/plugin.json` (x.y.z). Without a bump, users never
    receive the change. Don't put `version` in `marketplace.json`.
-3. Add a `## content-team x.y.z (date)` section at the top of `CHANGELOG.md`.
+3. Add a `## content-team x.y.z (date)` section at the top of `CHANGELOG.md`, and set the
+   `Template version` line in `workspace-template/CLAUDE.md` to the same version. If the release changes the
+   workspace template, say in the changelog that teams must copy it into their workspaces by hand.
 4. Run `python3 scripts/validate.py` and `claude plugin validate --strict .` locally (the GitHub Action runs
    both on the pull request).
 5. Test it: in a scratch workspace run `/plugin marketplace add <path to your clone>` and
