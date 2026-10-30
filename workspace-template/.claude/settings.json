@@ -14,12 +14,12 @@
       "mcp__Storyblok__execute_readonly"
     ],
     "ask": [
-      "mcp__Storyblok__execute_mutating"
+      "mcp__*__execute_mutating"
     ],
     "deny": [
-      "mcp__Storyblok__execute_destructive",
-      "mcp__Storyblok__upload_asset",
-      "mcp__Storyblok__upload_asset_finish"
+      "mcp__*__execute_destructive",
+      "mcp__*__upload_asset",
+      "mcp__*__upload_asset_finish"
     ]
   }
 }

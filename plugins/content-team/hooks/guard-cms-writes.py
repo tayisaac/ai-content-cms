@@ -1,10 +1,13 @@
 #!/usr/bin/env python3
 """PreToolUse guard for CMS write tools (content-team plugin).
 
-Allows ONLY draft saves of stories (create/update) without any publish flag.
+Allows ONLY draft saves of stories (create/update) without any publish flag,
+and even then asks the user to confirm, so the prompt appears whatever the
+server is called (permission rules only match the name "Storyblok").
 Blocks everything else: publish, unpublish, delete, components, datasources,
 folders, space settings, assets. Fails closed: any parsing problem blocks.
-Exit code 2 = block (stderr is shown to Claude). Exit 0 = allow.
+Exit code 2 = block (stderr is shown to Claude).
+Exit 0 + "ask" JSON on stdout = draft save, user confirms. Exit 0 alone = not a CMS write.
 """
 import json, re, sys
 
@@ -17,6 +20,17 @@ def block(msg):
                      " Only draft saves of stories (createStory/updateStory, no publish) are allowed. "
                      "Publishing, deleting and component or settings changes must be done by a human in the CMS.\n")
     sys.exit(2)
+
+def ask(op, params):
+    story = params.get("story") if isinstance(params.get("story"), dict) else {}
+    target = story.get("name") or story.get("slug") or params.get("story_id") or "a story"
+    sys.stdout.write(json.dumps({"hookSpecificOutput": {
+        "hookEventName": "PreToolUse",
+        "permissionDecision": "ask",
+        "permissionDecisionReason": "content-team: %s will save '%s' as an unpublished DRAFT in the CMS. "
+                                    "Nothing goes live. Approve only if you approved this change in the conversation."
+                                    % (op, target)}}))
+    sys.exit(0)
 
 def find_publish(obj):
     if isinstance(obj, dict):
@@ -49,9 +63,10 @@ if tool.endswith("execute_mutating"):
     op = str(inp.get("operation", ""))
     if op not in ALLOWED_OPERATIONS:
         block("operation '%s' is not a draft story save." % op)
-    key = find_publish(inp.get("parameters") or {})
+    params = inp.get("parameters") or {}
+    key = find_publish(params)
     if key:
         block("the call sets '%s', which could publish, schedule, overwrite a locked story or auto-translate." % key)
-    sys.exit(0)
+    ask(op, params)
 
 sys.exit(0)

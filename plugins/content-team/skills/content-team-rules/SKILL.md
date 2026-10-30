@@ -42,6 +42,11 @@ skill's `references/` folder to every sub-agent, because sub-agents cannot load 
 10. **Tag** every story created or edited with the tag in project.md (default `ai-draft`), including existing pages and site-wide blocks such as the menu. Add it alongside existing tags; never remove a tag.
 11. **Check knowledge freshness.** At the start of every page or catalogue run, compare project.md with the
     knowledge files (`references/freshness-check.md`). project.md always wins; agents never edit project.md.
+12. **One CMS connection.** Use only the CMS server named `Storyblok` (tools `mcp__Storyblok__…`). The workspace
+    permissions and the agents' tool lists only recognise that name. If the CMS tools appear under any other
+    name, such as a connector named by an ID (`mcp__<id>__…`) or `mcp__claude_ai_…`, never call them, even to
+    read: stop and tell the user to connect Storyblok through the workspace's `.mcp.json` (Claude Code) or a
+    connector named `Storyblok` (Cowork), and to switch the other connection off.
 
 ## Language handling
 

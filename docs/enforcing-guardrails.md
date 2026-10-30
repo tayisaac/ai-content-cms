@@ -11,7 +11,9 @@ See [managed-settings.example.json](managed-settings.example.json). What it does
 
 - Registers this marketplace for everyone, turns on auto-update and enables `content-team`.
 - `strictKnownMarketplaces`: only this marketplace may be added (remove it if people use other marketplaces).
-- Denies the Storyblok destructive and upload tools for every session, whatever a workspace says.
+- Denies the Storyblok destructive and upload tools for every session, whatever a workspace says. The rules
+  use `mcp__*__…`, so they also match a Storyblok connector named by an ID or `mcp__claude_ai_…`, whose ID
+  can differ between accounts.
 
 Stronger options, only if every hook and permission rule should come from IT:
 `allowManagedHooksOnly` (only managed hooks run; the safety check would then need to be deployed as a managed

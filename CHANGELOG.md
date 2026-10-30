@@ -3,6 +3,19 @@
 Each release bumps `version` in `plugins/<plugin>/.claude-plugin/plugin.json`. Users only receive a release
 when that version changes.
 
+## content-team 0.1.9 (2026-10-30)
+- Safety check asks the user to confirm every draft save it allows (`[plugin:content-team]` prompt), so the
+  prompt appears even when Storyblok is connected under another name, such as a connector named by an ID,
+  that the workspace's permission rules don't match.
+- One CMS connection: in Claude Code, Storyblok is connected only through the workspace's `.mcp.json`
+  (server `Storyblok`). New rule 12 in content-team-rules and a check in setup-project: if the CMS tools
+  appear under any other name, the workflow stops instead of using them. README, workspace template and
+  onboarding docs updated.
+- Workspace template and managed-settings example: the ask and deny rules now use `mcp__*__…`
+  (`execute_mutating` asks; `execute_destructive`, `upload_asset`, `upload_asset_finish` are denied), so they
+  match Storyblok under any server name, including connectors named by an ID that differs per account.
+  Read allow rules stay on `mcp__Storyblok__…`. validate.py checks these rules.
+
 ## content-team 0.1.8 (2026-10-16)
 - Repository renamed to tayisaac/ai-content-cms: links, install commands, the workspace template's
   marketplace source and the managed-settings example now use the new name. No behaviour change.

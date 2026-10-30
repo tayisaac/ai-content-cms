@@ -1,5 +1,5 @@
 {
-  "description": "Runs before any server's write, delete or upload action (including connectors named by ID). Blocks any CMS call that publishes, deletes, uploads assets or changes components/settings. Allows only draft story saves.",
+  "description": "Runs before any server's write, delete or upload action (including connectors named by ID). Blocks any CMS call that publishes, deletes, uploads assets or changes components/settings. Allows only draft story saves, and asks the user to confirm each one.",
   "hooks": {
     "PreToolUse": [
       {
