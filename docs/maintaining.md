@@ -25,7 +25,8 @@ behaviour, make it configurable through `project.md` instead.
    both on the pull request).
 5. Test it: in a scratch workspace run `/plugin marketplace add <path to your clone>` and
    `/plugin install content-team@aicontentteam`, then run one read-only job and the publish-blocked check.
-6. Merge, then tag the release: `git tag content-team--vX.Y.Z && git push --tags`.
+6. Merge, then tag the release and push only that tag:
+   `git tag content-team--vX.Y.Z && git push origin content-team--vX.Y.Z`.
 7. Tell the teams; they run `/plugin marketplace update aicontentteam` (or receive it via auto-update).
 8. Cowork users: run `scripts/build-cowork-plugin.sh` and share the `.plugin` file it builds.
 
