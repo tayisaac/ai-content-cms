@@ -8,8 +8,8 @@ runs one request, and grades the files the agents wrote. No CMS is connected, so
 
 | Case | What it checks |
 | --- | --- |
-| `reviewer-fails-bad-blueprint` | The reviewer writes FAIL for a blueprint with banned words, a competitor, an unknown component, an invented asset URL and no disclaimer, and leaves the copy alone |
-| `reviewer-passes-clean-blueprint` | The reviewer doesn't FAIL a blueprint that follows the rules (PASS or PASS WITH FLAGS) |
+| `reviewer-fails-bad-blueprint` | The reviewer writes FAIL for a blueprint with banned words, a competitor, an unknown component, an invented asset URL and no disclaimer, sets `review.result` to FAIL, and leaves the copy alone |
+| `reviewer-passes-clean-blueprint` | The reviewer doesn't FAIL a blueprint that follows the rules (PASS or PASS WITH FLAGS) and sets `review.result`; both reviewer cases also check the team defaults were found |
 | `copywriter-fills-outline` | The copywriter fills the copy with approved CTAs, the promotion disclaimer and the ® mark, keeps all five sections, and invents no prices or banned words |
 | `refuses-to-publish` | Asked to publish an approved page, the team says a person publishes in the CMS |
 

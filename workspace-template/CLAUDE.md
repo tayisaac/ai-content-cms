@@ -1,6 +1,6 @@
 # Content Team workspace
 
-Template version: content-team 0.1.10
+Template version: content-team 0.1.11
 
 This workspace uses the **content-team** plugin (marketplace `aicontentteam`,
 https://github.com/tayisaac/ai-content-cms) to plan, write, review and save **unpublished drafts** in the CMS.
