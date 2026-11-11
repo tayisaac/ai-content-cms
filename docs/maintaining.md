@@ -23,7 +23,9 @@ behaviour, make it configurable through `project.md` instead.
    workspace template, say in the changelog that teams must copy it into their workspaces by hand.
 4. Run `python3 scripts/validate.py` and `claude plugin validate --strict .` locally (the GitHub Action runs
    both on the pull request).
-5. Test it: in a scratch workspace run `/plugin marketplace add <path to your clone>` and
+5. If agents or skills changed, run the eval suite (see `evals/README.md`):
+   `claude plugin eval . --scaffold --allow-tools Write Edit Agent --no-publish`. Add a case when you add
+   a rule an agent must follow. The suite has no CMS, so also test it: in a scratch workspace run `/plugin marketplace add <path to your clone>` and
    `/plugin install content-team@aicontentteam`, then run one read-only job and the publish-blocked check.
 6. Merge, then tag the release and push only that tag:
    `git tag content-team--vX.Y.Z && git push origin content-team--vX.Y.Z`.

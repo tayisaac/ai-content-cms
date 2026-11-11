@@ -17,7 +17,9 @@ reviewed.
 - `workspace-template/`: what a team copies to make its own workspace. Changes here don't reach
   existing workspaces; teams copy them by hand.
 - `docs/`: guides for maintainers and teams (onboarding, maintaining, guardrails, the workflow graph).
-- `scripts/`: `validate.py` (release checks, also run in CI) and `build-cowork-plugin.sh`.
+- `scripts/`: `validate.py` (release checks and safety check tests, also run in CI) and
+  `build-cowork-plugin.sh`.
+- `evals/`: the `claude plugin eval` suite for the agents, with fictional fixtures. Not shipped to teams.
 - `.github/`: the CI workflow, CODEOWNERS, and the pull request and issue templates.
 - `CHANGELOG.md`: one section per plugin version.
 - `AI Content Team for CMS — Setup Guide.docx`: the setup guide for teams. Edit it with the docx

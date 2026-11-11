@@ -1,0 +1,50 @@
+{
+  "action": "create",
+  "existing_story_id": null,
+  "page_type": "promotion",
+  "folder": "sg/en/promotions/",
+  "slug": "office-eye-check-december",
+  "languages": ["en"],
+  "title": { "en": "" },
+  "seo": { "title": { "en": "" }, "description": { "en": "" } },
+  "page_fields": { "promo_start": "2026-12-01", "promo_end": "2026-12-31" },
+  "sections": [
+    {
+      "id": "s1", "section": "hero", "component": "hero", "variant": null,
+      "purpose": "Introduce the free eye check offer for office workers",
+      "fields": {
+        "headline": { "en": "" },
+        "subhead": { "en": "" },
+        "image": { "brief": "Office worker taking a short screen break by a window", "alt": { "en": "" }, "asset": null },
+        "cta": { "label": { "en": "" }, "link": "/sg/en/book" }
+      }
+    },
+    {
+      "id": "s2", "section": "body", "component": "rich_text", "variant": null,
+      "purpose": "Explain what the eye check covers and how to book",
+      "fields": { "body": { "en": "" } }
+    },
+    {
+      "id": "s3", "section": "faq", "component": "faq", "variant": null,
+      "purpose": "Answer three common questions about the free eye check",
+      "fields": { "heading": { "en": "" }, "items": [] }
+    },
+    {
+      "id": "s4", "section": "cta", "component": "cta_block", "variant": null,
+      "purpose": "Close with the booking action",
+      "fields": { "heading": { "en": "" }, "button_label": { "en": "" }, "button_link": "/sg/en/book" }
+    },
+    {
+      "id": "s5", "section": "disclaimer", "component": "disclaimer", "variant": null,
+      "purpose": "Required promotion disclaimer",
+      "fields": { "text": { "en": "" } }
+    }
+  ],
+  "component_gaps": [],
+  "assumptions": ["SEO defaults applied (project.md SEO is unknown)"],
+  "human_checks": ["New offer (free eye check) needs Marketing approval per project.md"],
+  "status": "draft",
+  "review": { "result": null, "report": "review.md" },
+  "approved_by": null,
+  "saved": { "story_id": null, "preview": null }
+}
