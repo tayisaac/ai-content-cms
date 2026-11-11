@@ -3,6 +3,14 @@
 Each release bumps `version` in `plugins/<plugin>/.claude-plugin/plugin.json`. Users only receive a release
 when that version changes.
 
+## content-team 0.1.11 (2026-11-11)
+- content-reviewer can now Edit, and sets only `review.result` in blueprint.json with it, instead of having to
+  rewrite the whole file with Write. It sets the result even when the caller says not to change the copy.
+- content-reviewer finds the team defaults and review template when called outside a workflow: its
+  description tells the caller to load content-team-rules and pass the paths, and the agent searches for them
+  if they are missing. Without them it says so in review.md and flags the SEO and accessibility checks.
+- Found by the new eval suite (`evals/`). Existing workspaces need no changes.
+
 ## content-team 0.1.10 (2026-10-30)
 - Workspace template's CLAUDE.md rewritten into four sections: Folders, Sources, Never, and If a file cannot
   be read. The Never rules apply even when the user asks otherwise. When a file can't be read, Claude stops
