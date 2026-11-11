@@ -43,8 +43,13 @@
     }
   ],
   "component_gaps": [],
-  "assumptions": ["SEO defaults applied (project.md SEO is unknown)"],
-  "human_checks": ["s1, s4: new offer (free eye check) needs Marketing approval per project.md"],
+  "human_checks": [
+    "title, seo.title, seo.description, s1, s2, s3, s4: new offer (free eye check) needs Marketing (Jamie) approval per project.md",
+    "s1 subhead, s2 body, seo.description: eye-health statements (vision check, screen work) need a human per project.md",
+    "s1 image: attach an existing CMS asset before saving (hero image is required)",
+    "Offer dates 1 to 31 December 2026 and link targets /sg/en/book, /sg/en/articles/screen-time-and-your-eyes, /sg/en/products/office-lenses: confirm before saving"
+  ],
+  "assumptions": ["SEO defaults applied (project.md SEO is unknown)", "English only: this promotion has no Simplified Chinese version unless the requester asks"],
   "status": "draft",
   "review": { "result": null, "report": "review.md" },
   "approved_by": null,

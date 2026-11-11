@@ -5,4 +5,4 @@ set -euo pipefail
 here="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 cp -R "$here/ClearView" ./ClearView
 mkdir -p "ClearView/runs/$2"
-cp "$here/runs/$1/blueprint.json" "ClearView/runs/$2/blueprint.json"
+cp "$here/runs/$1/"* "ClearView/runs/$2/"   # blueprint.json, plus brief.md where the fixture has one

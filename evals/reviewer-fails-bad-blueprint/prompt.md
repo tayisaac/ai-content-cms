@@ -7,4 +7,4 @@ timeout_seconds: 600
 allowed_tools: [Read, Glob, Grep, Write, Agent, Skill]
 ---
 
-Please run the content-reviewer agent on the blueprint in ClearView/runs/2026-11-11-dry-eye-promo/. The project folder is ClearView/. I only want the review, don't change the copy.
+Please run the content-reviewer agent on the blueprint in ClearView/runs/2026-11-11-dry-eye-promo/. The project folder is ClearView/
