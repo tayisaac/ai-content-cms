@@ -1,0 +1,52 @@
+{
+  "action": "create",
+  "existing_story_id": null,
+  "page_type": "promotion",
+  "folder": "sg/en/promotions/",
+  "slug": "office-eye-check-december",
+  "languages": ["en"],
+  "title": { "en": "Free Eye Check for Office Workers" },
+  "seo": {
+    "title": { "en": "Free Eye Check for Office Workers | ClearView® Optics" },
+    "description": { "en": "Spend long days at a screen? Book a free eye check at a ClearView® partner store this December and get expert advice on comfortable vision at work." }
+  },
+  "page_fields": { "promo_start": "2026-12-01", "promo_end": "2026-12-31" },
+  "sections": [
+    {
+      "id": "s1", "section": "hero", "component": "hero", "variant": null,
+      "purpose": "Introduce the free eye check offer",
+      "fields": {
+        "headline": { "en": "Free eye check for office workers" },
+        "subhead": { "en": "Long days at a screen? An eyecare professional at a ClearView® partner store can check your vision and share simple tips for comfortable work." },
+        "image": { "brief": "Office worker taking a short screen break by a window", "alt": { "en": "Office worker looking out of a window during a break from her laptop" }, "asset": null },
+        "cta": { "label": { "en": "Book an eye check" }, "link": "/sg/en/book" }
+      }
+    },
+    {
+      "id": "s2", "section": "body", "component": "rich_text", "variant": null,
+      "purpose": "Explain what the eye check covers",
+      "fields": { "body": { "en": "## What your free eye check covers\nYour eyecare professional will test your vision and look at how your eyes cope with screen work. Read our guide to [screen time and your eyes](/sg/en/articles/screen-time-and-your-eyes) or see our [lenses for office work](/sg/en/products/office-lenses).\n\n## How to book\nChoose a partner store and a time that suits you. The offer runs from 1 to 31 December 2026." } }
+    },
+    {
+      "id": "s3", "section": "cta", "component": "cta_block", "variant": null,
+      "purpose": "Close with the booking action",
+      "fields": {
+        "heading": { "en": "Ready for your free eye check?" },
+        "button_label": { "en": "Book an eye check" },
+        "button_link": "/sg/en/book"
+      }
+    },
+    {
+      "id": "s4", "section": "disclaimer", "component": "disclaimer", "variant": null,
+      "purpose": "Required promotion disclaimer",
+      "fields": { "text": { "en": "Offer valid 1 December 2026 to 31 December 2026. Terms and conditions apply. While stocks last." } }
+    }
+  ],
+  "component_gaps": [],
+  "assumptions": ["SEO defaults applied (project.md SEO is unknown)"],
+  "human_checks": ["s1, s4: new offer (free eye check) needs Marketing approval per project.md"],
+  "status": "draft",
+  "review": { "result": null, "report": "review.md" },
+  "approved_by": null,
+  "saved": { "story_id": null, "preview": null }
+}

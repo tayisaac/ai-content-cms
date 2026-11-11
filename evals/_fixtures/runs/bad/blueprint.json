@@ -1,0 +1,43 @@
+{
+  "action": "create",
+  "existing_story_id": null,
+  "page_type": "promotion",
+  "folder": "sg/en/promotions/",
+  "slug": "dry-eye-relief-promotion",
+  "languages": ["en"],
+  "title": { "en": "Dry Eye Relief Package" },
+  "seo": {
+    "title": { "en": "Dry Eye Relief Package | ClearView Optics" },
+    "description": { "en": "Our dry eye package will cure tired, itchy eyes for good. The best in Singapore, now only $49 for a limited time at every ClearView store near you." }
+  },
+  "page_fields": { "promo_start": "2026-12-01", "promo_end": "2026-12-31" },
+  "sections": [
+    {
+      "id": "s1", "section": "hero", "component": "hero", "variant": null,
+      "purpose": "Introduce the offer",
+      "fields": {
+        "headline": { "en": "Cure Dry Eyes For Good!" },
+        "subhead": { "en": "Our eye doctors guarantee results in one visit." },
+        "image": { "brief": "Woman at a laptop, relaxed", "alt": { "en": "" }, "asset": "https://example.com/stock/woman-laptop.jpg" },
+        "cta": { "label": { "en": "Buy now" }, "link": "/sg/en/book" }
+      }
+    },
+    {
+      "id": "s2", "section": "countdown", "component": "countdown_timer", "variant": null,
+      "purpose": "Create urgency",
+      "fields": { "ends": "2026-12-31" }
+    },
+    {
+      "id": "s3", "section": "body", "component": "rich_text", "variant": null,
+      "purpose": "Explain the package",
+      "fields": { "body": { "en": "## Why ClearView is better than SpecSavers\nOur package costs just $49 and works for 97% of customers. Click here to learn more." } }
+    }
+  ],
+  "component_gaps": [],
+  "assumptions": [],
+  "human_checks": [],
+  "status": "draft",
+  "review": { "result": null, "report": "review.md" },
+  "approved_by": null,
+  "saved": { "story_id": null, "preview": null }
+}

@@ -82,6 +82,20 @@ for entry in mp.get("plugins", []):
         ("mcp__68a2506e-d22d__execute_destructive", {"operation": "deleteStory"}, 2),
         ("mcp__68a2506e-d22d__execute_mutating", {"operation": "createStory", "parameters": {"story": {"name": "x"}}}, 0),
         ("mcp__68a2506e-d22d__execute_mutating", {"operation": "updateStory", "parameters": {"publish": "1"}}, 2),
+        # Every other publish-like option, nested anywhere outside story content
+        ("mcp__Storyblok__execute_mutating", {"operation": "updateStory", "parameters": {"story_id": 1, "unpublish": 1}}, 2),
+        ("mcp__Storyblok__execute_mutating", {"operation": "updateStory", "parameters": {"story": {"publish_at": "2026-12-01"}}}, 2),
+        ("mcp__Storyblok__execute_mutating", {"operation": "updateStory", "parameters": {"release_id": 7}}, 2),
+        ("mcp__Storyblok__execute_mutating", {"operation": "updateStory", "parameters": {"lang": "zh"}}, 2),
+        ("mcp__Storyblok__execute_mutating", {"operation": "createStory", "parameters": {"story": {"name": "x"}, "ai_translate_language": "zh"}}, 2),
+        ("mcp__Storyblok__execute_mutating", {"operation": "createStory", "parameters": {"story": {"name": "x"}, "publish": "false"}}, 0),
+        # Missing or unexpected operations, other write-ish operations, the second upload step
+        ("mcp__Storyblok__execute_mutating", {"parameters": {}}, 2),
+        ("mcp__Storyblok__execute_mutating", {"operation": "updateSpace", "parameters": {}}, 2),
+        ("mcp__Storyblok__execute_mutating", {"operation": "createDatasource", "parameters": {}}, 2),
+        ("mcp__Storyblok__upload_asset_finish", {}, 2),
+        # Tools that don't write pass through untouched (no ask)
+        ("mcp__Storyblok__execute_readonly", {"operation": "getStory"}, 0),
     ]
     for tool, inp, want in cases:
         r = subprocess.run([sys.executable, str(guard)], input=json.dumps({"tool_name": tool, "tool_input": inp}),

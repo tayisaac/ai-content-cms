@@ -1,0 +1,34 @@
+name: Agent evals
+# Manual only: each run calls the Claude API and costs money. Needs the ANTHROPIC_API_KEY repository secret.
+on:
+  workflow_dispatch:
+    inputs:
+      runs:
+        description: "Runs per case"
+        default: "3"
+jobs:
+  evals:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Run the eval suite
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          npx -y @anthropic-ai/claude-code plugin eval . \
+            --trust-plugin --scaffold \
+            --allow-tools Write Edit Agent \
+            --runs "${{ inputs.runs }}" \
+            --threshold 0.8 \
+            --json results.json --report report.html \
+            --no-publish --max-cost-usd 15
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: eval-results
+          path: |
+            results.json
+            report.html
