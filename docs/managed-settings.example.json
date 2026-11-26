@@ -1,21 +1,24 @@
 {
-  "extraKnownMarketplaces": {
-    "aicontentteam": {
-      "source": { "source": "github", "repo": "tayisaac/ai-content-cms" },
-      "autoUpdate": true
-    }
-  },
-  "enabledPlugins": {
-    "content-team@aicontentteam": true
-  },
-  "strictKnownMarketplaces": [
-    { "source": "github", "repo": "tayisaac/ai-content-cms" }
-  ],
+  "strictKnownMarketplaces": [],
   "permissions": {
     "deny": [
       "mcp__*__execute_destructive",
       "mcp__*__upload_asset",
       "mcp__*__upload_asset_finish"
+    ]
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "mcp__.*__(execute_mutating|execute_destructive|upload_asset|upload_asset_finish)",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 \"$CLAUDE_PROJECT_DIR/.claude/hooks/guard-cms-writes.py\" || exit 2",
+            "timeout": 15
+          }
+        ]
+      }
     ]
   }
 }

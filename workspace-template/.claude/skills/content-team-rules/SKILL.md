@@ -1,7 +1,7 @@
 ---
 name: content-team-rules
 description: >
-  Shared rules, defaults, file formats and folder conventions for the content-team plugin.
+  Shared rules, defaults, file formats and folder conventions for the content team.
   This skill should be used whenever another content-team skill runs (setup-project, create-page,
   update-page, refresh-catalogue), or when the user asks "what are the content team rules",
   "what defaults does the content team use", or "how is the ContentTeam folder organised".

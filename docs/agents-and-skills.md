@@ -3,15 +3,11 @@
 A seven-agent content team for a headless CMS (built for Storyblok, designed to swap). It plans, designs pages
 from existing components, writes, reviews and saves **unpublished drafts**. Humans publish.
 
-## Install (Claude Code)
+## Where the files live
 
-```
-/plugin marketplace add tayisaac/ai-content-cms
-/plugin install content-team@aicontentteam
-```
-
-Or open a workspace made from `workspace-template/`: its `.claude/settings.json` registers the marketplace and
-enables the plugin. In Claude Code the agents are named `content-team:<agent>`.
+The agents, skills and safety check live in `workspace-template/.claude/` and are copied into each team's
+workspace by `scripts/update-workspace.sh` (see [onboarding-a-team.md](onboarding-a-team.md)). In Claude Code
+the agents and skills go by their plain names, such as `cms-operator` and `create-page`.
 
 ## Skills (ask in plain words)
 
@@ -38,11 +34,11 @@ enables the plugin. In Claude Code the agents are named `content-team:<agent>`.
 
 ## Safety
 
-- A safety check (hooks/guard-cms-writes.py) runs before every write, delete or upload call on any
+- A safety check (`.claude/hooks/guard-cms-writes.py`, run by the hook in `.claude/settings.json`) runs before every write, delete or upload call on any
   connected server, including Storyblok connectors whose tools are named by an ID. It allows only
   `createStory` / `updateStory` without publish, force-update, AI-translate or per-language publish options, and blocks publishing, deleting, asset uploads and
   component or settings changes. It fails closed. Every draft save it allows still shows the user a
-  confirmation prompt (labelled `[plugin:content-team]`), whatever the server is called.
+  confirmation prompt (with the reason `content-team: … will save … as an unpublished DRAFT`), whatever the server is called.
 - The workspace template's permission rules back this up: draft saves ask and deletes and uploads are
   denied on any server (`mcp__*__execute_mutating`, `mcp__*__execute_destructive`, `mcp__*__upload_asset*`),
   so they also cover connectors named by an ID. Reads are pre-approved only for the `Storyblok` server,

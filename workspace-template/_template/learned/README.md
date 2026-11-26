@@ -5,9 +5,9 @@ by scanning the existing site in the CMS (read-only). Review and correct; your e
 CMS-neutral: nothing here changes if the project swaps CMS.
 
 - content-model.md   page types and their sections, as found on the site
-                     (format: content-team plugin: skills/content-team-rules/references/formats/content-model.format.md)
+                     (format: .claude/skills/content-team-rules/references/formats/content-model.format.md)
 - page-patterns/     how the best existing pages are structured, one file per page
-                     (format: content-team plugin: skills/content-team-rules/references/formats/page-pattern.format.md)
+                     (format: .claude/skills/content-team-rules/references/formats/page-pattern.format.md)
 - voice-notes.md     tone and phrasing observed in current copy, to supplement project.md
 - mockup-kit/        the site's look for mock-ups (site.css, header, footer, one example per
                      section), captured with a browser when you say "build the mock-up kit"

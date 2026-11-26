@@ -1,16 +1,17 @@
 # Workflow graph
 
-How the content-team plugin moves a request from the user to an unpublished CMS draft. This describes
+How the content team moves a request from the user to an unpublished CMS draft. This describes
 `create-page` and `update-page` (the main graph) and the supporting workflows that prepare a project's
-knowledge files. The source of truth is the plugin itself: `plugins/content-team/skills/*/SKILL.md`,
-`plugins/content-team/agents/*.md` and `plugins/content-team/hooks/`. If this page and the plugin disagree,
-the plugin wins and this page needs updating.
+knowledge files. The source of truth is the files themselves: `workspace-template/.claude/skills/*/SKILL.md`,
+`workspace-template/.claude/agents/*.md`, `workspace-template/.claude/hooks/` and the hook in
+`workspace-template/.claude/settings.json`. If this page and those files disagree, the files win and this page
+needs updating.
 
 Every node is one of three kinds:
 
 | Kind | Meaning |
 | --- | --- |
-| **Agent** | Claude. Either the **Coordinator** (the main Claude session following a skill) or a plugin sub-agent (`content-team:<agent>`). |
+| **Agent** | Claude. Either the **Coordinator** (the main Claude session following a skill) or a content-team sub-agent (`.claude/agents/<agent>.md`). |
 | **Code** | Deterministic software: the safety-check hook, Claude Code's permission rules, the CMS API. |
 | **Person** | A human decision or action. The graph waits until it happens. |
 
@@ -35,7 +36,7 @@ Every node is one of three kinds:
 | N12 | Save | Agent (cms-operator, save mode) | The approval wording; `blueprint.json`; `preview.md`; `review.result` | A CMS create/update call for a draft story with the project's tag (default `ai-draft`); after saving, `blueprint.json` `saved.story_id` and `saved.preview`; an entry in `log.md`. If it cannot write: `change-sheet.md` |
 | N13 | Safety check | Code (`hooks/guard-cms-writes.py`) | The tool name and parameters of every `execute_mutating`, `execute_destructive`, `upload_asset` or `upload_asset_finish` call on any server | Block (exit 2, with a reason) or "ask" (the user must confirm the draft save) |
 | N14 | Permission rules | Code (workspace `.claude/settings.json`) | The tool name | `mcp__*__execute_mutating` asks; `mcp__*__execute_destructive` and `mcp__*__upload_asset*` are denied |
-| N15 | Confirm save prompt | Person | The `[plugin:content-team]` prompt naming the story | Allow or deny the single CMS call |
+| N15 | Confirm save prompt | Person | The safety check's `content-team: … will save …` prompt naming the story | Allow or deny the single CMS call |
 | N16 | CMS | Code (Storyblok Management API) | The allowed create/update call | An unpublished draft story; the story id |
 | N17 | Paste change sheet | Person | `change-sheet.md` | The draft entered by hand in the CMS; confirmation to the Coordinator |
 | N18 | Log | Agent (Coordinator) | Everything above | Completed `log.md` (request, story id, gaps, reviewer result, approver, link, knowledge-check result) |
@@ -133,7 +134,7 @@ flowchart TD
 | N12 | N17 | `change-sheet.md` |
 | N16, N17 | N18 | Story id and editor link, or "saved manually by human" |
 | N18 | N19 | The mismatch list (only if the person accepts the offer) |
-| N18 | N20 | The editor link. The person publishes in the CMS, outside the plugin |
+| N18 | N20 | The editor link. The person publishes in the CMS, outside the content team |
 | S1 → S2 → S3 → S4 | N1 | A project with `cms/` and `learned/` files. Required before any page run |
 | S5, S6 | N1 | A refreshed catalogue or a mock-up kit |
 

@@ -25,7 +25,7 @@ ContentTeam/
 2. project.md
 3. extras/ documents referenced by project.md
 4. Files marked "Status: reviewed" in learned/ and cms/
-5. The plugin defaults in this skill's references/defaults/
+5. The team defaults in this skill's references/defaults/
 6. Files marked "Status: draft" (suggestions only)
 
 ## Status markers
