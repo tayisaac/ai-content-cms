@@ -1,7 +1,7 @@
 ---
 description: The content-reviewer agent must FAIL a blueprint that breaks project.md rules, and must not rewrite it.
 tags: [agents, reviewer]
-plugins: ["../../plugins/content-team"]
+plugins: ["../../.build/content-team"]
 max_turns: 20
 timeout_seconds: 600
 allowed_tools: [Read, Glob, Grep, Write, Agent, Skill]

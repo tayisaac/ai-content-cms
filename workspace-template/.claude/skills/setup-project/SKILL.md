@@ -32,7 +32,7 @@ If anything is blocking, ask the user to fix it (offer exact wording to add) and
 
 Confirm the CMS tools are available as `mcp__Storyblok__…`. If they only appear under another name (a
 connector named by an ID or `mcp__claude_ai_…`), this is blocking: follow rule 12 in content-team-rules and stop.
-Then confirm the CMS connector responds with a read-only call (list spaces or the space named in project.md). If the region is needed and unknown, ask the user. Report the access level if visible (e.g. admin), and remind the user that the plugin's safety hook blocks publish, delete and component changes.
+Then confirm the CMS connector responds with a read-only call (list spaces or the space named in project.md). If the region is needed and unknown, ask the user. Report the access level if visible (e.g. admin), and remind the user that the workspace's safety check (.claude/hooks/guard-cms-writes.py) blocks publish, delete and component changes.
 
 ## Step 4 – Run the Librarian
 

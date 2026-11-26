@@ -1,7 +1,31 @@
 # Changelog
 
-Each release bumps `version` in `plugins/<plugin>/.claude-plugin/plugin.json`. Users only receive a release
-when that version changes.
+Each release bumps `workspace-template/.claude/content-team-version`. Teams get a release by running
+`scripts/update-workspace.sh` and compare their `.claude/content-team-version` with this file to see if they
+are behind. (Up to 0.1.11 the version was in the plugin's `plugin.json`.)
+
+## content-team 0.2.0 (2026-11-26)
+- **No more plugin.** The `aicontentteam` marketplace and the `content-team` plugin are gone. The agents,
+  skills and safety check now live in `workspace-template/.claude/` and each team keeps a copy in its
+  workspace's `.claude/`. Agents and skills go by their plain names (`cms-operator`, `create-page`) instead
+  of `content-team:<name>`. Their behaviour hasn't changed.
+- New `scripts/update-workspace.sh <workspace>`: copies or updates the agents, skills and safety check, and
+  removes files a release drops (tracked in `.claude/content-team-files`). It never edits `settings.json`,
+  `CLAUDE.md` or project folders. It warns if the safety check hook is missing or the old plugin is still
+  enabled.
+- The safety check now runs from a `hooks` block in the workspace's `.claude/settings.json` instead of the
+  plugin. The check itself, its matcher and the permission rules haven't changed. Risk: a team member can
+  edit or delete that block, which was harder with the plugin. The update script warns when it's missing,
+  validate.py checks the template, and the managed-settings example now deploys the same hook (and sets
+  `strictKnownMarketplaces` to `[]` instead of listing the retired marketplace).
+- Cowork is no longer supported (it needs a `.plugin` file); `build-cowork-plugin.sh` is removed.
+- Evals: `scripts/build-eval-plugin.sh` builds a throwaway plugin from `workspace-template/.claude/` into
+  `.build/` (git-ignored, never shipped) so `claude plugin eval` and `claude plugin validate` still
+  run. CI builds it first.
+- **Teams must act** (see "Moving a workspace off the old plugin" in docs/onboarding-a-team.md): in
+  `.claude/settings.json` remove `extraKnownMarketplaces` and `enabledPlugins` and add the `hooks` block;
+  replace `CLAUDE.md` above Team notes; run `update-workspace.sh`; each person uninstalls the plugin and
+  removes the marketplace. Plugin installs stay at 0.1.11.
 
 ## content-team 0.1.11 (2026-11-11)
 - content-reviewer can now Edit, and sets only `review.result` in blueprint.json with it, instead of having to

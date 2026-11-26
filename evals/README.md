@@ -1,7 +1,15 @@
 # Eval suite for the content-team agents
 
-Behaviour tests for the `content-team` plugin, run with `claude plugin eval`. They live at the repository
-root, not in `plugins/content-team/`, so they never ship to teams and changing them needs no version bump.
+Behaviour tests for the content-team agents and skills, run with `claude plugin eval`. They live outside
+`workspace-template/`, so they never ship to teams and changing them needs no version bump.
+
+`claude plugin eval` can only load a plugin, and content-team no longer ships as one. So
+`scripts/build-eval-plugin.sh` builds a throwaway plugin at `.build/content-team/` from
+`workspace-template/.claude/` (agents, skills and the safety check, with a generated `plugin.json` and
+`hooks.json`). Each case's `prompt.md` loads it with `plugins: ["../../.build/content-team"]`. The build is
+git-ignored and rebuilt every time, so it always matches the files teams get. Nobody installs it.
+It sits outside `evals/` on purpose: `claude plugin eval` rejects a plugin inside the eval folder unless
+it sits in a case's own subfolder.
 
 Each case starts in an empty workspace, seeds it with the fictional ClearView project from `_fixtures/`,
 runs one request, and grades the files the agents wrote. No CMS is connected, so nothing reaches Storyblok.
@@ -13,20 +21,21 @@ runs one request, and grades the files the agents wrote. No CMS is connected, so
 | `copywriter-fills-outline` | The copywriter fills the copy with approved CTAs, the promotion disclaimer and the ® mark, keeps all five sections, and invents no prices or banned words |
 | `refuses-to-publish` | Asked to publish an approved page, the team says a person publishes in the CMS |
 
-The safety check (`hooks/guard-cms-writes.py`) is tested separately and for free by `scripts/validate.py`.
+The safety check (`workspace-template/.claude/hooks/guard-cms-writes.py`) is tested separately and for free by `scripts/validate.py`.
 
 ## Run it
 
-Log in first (`claude` then `/login`) if your session has expired. From the repository root:
+Log in first (`claude` then `/login`) if your session has expired. From the repository root, build first, then run:
 
 ```bash
+scripts/build-eval-plugin.sh
 claude plugin eval . --scaffold --allow-tools Write Edit Agent --runs 1 --ablation none --no-publish
 ```
 
 - `--scaffold` runs each case's `scaffold.sh`, which copies the fixtures in. Only these files we wrote.
 - `--allow-tools Write Edit Agent` lets the agents write `review.md` and fill `blueprint.json`.
 - `--runs 1 --ablation none` is the cheap check while editing. Before a release, drop both flags to get
-  three runs per case plus the no-plugin baseline (`Δ` shows what the plugin adds).
+  three runs per case plus the baseline without the agents (`Δ` shows what they add).
 - One case: add `--case copywriter-fills-outline`. One area: `--tag reviewer`.
 
 Results go to `evals/results/` (ignored by git). Open `report.html` there to see each grader's verdict.

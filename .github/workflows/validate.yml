@@ -1,4 +1,4 @@
-name: Validate marketplace
+name: Validate content-team
 on:
   pull_request:
   push:
@@ -11,12 +11,12 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - name: Release checks (manifests, agents, skills, safety check tests)
+      - name: Release checks (version, agents, skills, settings, safety check tests)
         run: python3 scripts/validate.py
       - uses: actions/setup-node@v4
         with:
           node-version: "22"
-      - name: Claude Code plugin validation
+      - name: Claude Code validation of the agents and skills (through the eval build)
         run: |
-          npx -y @anthropic-ai/claude-code plugin validate --strict .
-          npx -y @anthropic-ai/claude-code plugin validate --strict plugins/content-team
+          scripts/build-eval-plugin.sh
+          npx -y @anthropic-ai/claude-code plugin validate --strict .build/content-team

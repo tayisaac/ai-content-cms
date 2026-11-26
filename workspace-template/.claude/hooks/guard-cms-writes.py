@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""PreToolUse guard for CMS write tools (content-team plugin).
+"""PreToolUse guard for CMS write tools (content-team). Runs from .claude/settings.json.
 
 Allows ONLY draft saves of stories (create/update) without any publish flag,
 and even then asks the user to confirm, so the prompt appears whatever the

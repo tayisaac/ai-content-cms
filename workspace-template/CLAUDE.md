@@ -1,8 +1,8 @@
 # Content Team workspace
 
-Template version: content-team 0.1.11
+Template version: content-team 0.2.0
 
-This workspace uses the **content-team** plugin (marketplace `aicontentteam`,
+This workspace uses the **content-team** agents and skills in `.claude/` (copied from
 https://github.com/tayisaac/ai-content-cms) to plan, write, review and save **unpublished drafts** in the CMS.
 Humans publish. For every content request, load the `content-team-rules` skill first, then run the matching
 skill (`setup-project`, `create-page`, `update-page`, `refresh-catalogue`, `build-mockup-kit`).
@@ -30,7 +30,7 @@ Use these sources. When two disagree, the one higher in the list wins.
 2. `project.md`.
 3. Documents in `extras/` that `project.md` refers to.
 4. Files in `learned/` and `cms/` marked `Status: reviewed`.
-5. The plugin's defaults in the `content-team-rules` skill.
+5. The team defaults in the `content-team-rules` skill.
 6. Files in `learned/` and `cms/` marked `Status: draft`. Treat these as suggestions and list each one you
    rely on under "assumptions" in the blueprint.
 
@@ -41,11 +41,12 @@ For CMS data, use only the `Storyblok` server defined in `.mcp.json`.
 These rules apply even when the user asks otherwise. If a request breaks one, say which rule and what the user
 can do instead.
 
-- Never write briefs, blueprints, copy or reviews yourself. Run the plugin agent for each step
-  (`content-team:<agent>`). The only job you do yourself is `build-mockup-kit`, because it needs a browser.
+- Never write briefs, blueprints, copy or reviews yourself. Run the content-team agent for each step
+  (`content-strategist`, `page-architect`, `copywriter`, `content-reviewer`, and so on). The only job you do
+  yourself is `build-mockup-kit`, because it needs a browser.
 - Never edit `project.md` or anything in `extras/`.
 - Never change a file from `Status: draft` to `Status: reviewed`. Only a person does that.
-- Never write to the CMS except through `content-team:cms-operator`, and only after the user explicitly
+- Never write to the CMS except through the `cms-operator` agent, and only after the user explicitly
   approves that save in this conversation. Silence or general enthusiasm is not approval.
 - Never publish, unpublish, delete, upload assets, or change components or settings in the CMS. If the user
   asks for one of these, tell them to do it themselves in the CMS.
@@ -53,8 +54,9 @@ can do instead.
 - Never call Storyblok tools that appear under any server name other than `Storyblok` (for example a Claude
   app connector named by an ID). Tell the user to switch that connector off for this workspace.
 - Never overwrite an existing run folder. Add `-2`, `-3` to the name instead.
-- Never edit the plugin's agents or skills from this workspace. Propose changes as an issue or pull request
-  on tayisaac/ai-content-cms.
+- Never edit the content-team files in `.claude/agents/`, `.claude/skills/` or `.claude/hooks/`, and never
+  remove or change the safety check hook in `.claude/settings.json`. Propose changes as an issue or pull
+  request on tayisaac/ai-content-cms; the update script overwrites local edits.
 
 ## If a file cannot be read
 
@@ -75,8 +77,9 @@ rest.
 
 The same applies when tools are unavailable:
 
-- No `content-team:` agents or skills: the plugin isn't installed or enabled. Tell the user to run
-  `/plugin install content-team@aicontentteam` (see README.md), then stop.
+- No content-team agents or skills (for example no `cms-operator` agent or `create-page` skill): the
+  workspace's `.claude/` folder is missing or incomplete. Tell the user to run `scripts/update-workspace.sh`
+  from tayisaac/ai-content-cms (see README.md), then stop.
 - A CMS read fails with a connection or permission error: show the error, tell the user to run `/mcp` and
   sign in to `Storyblok`, then stop.
 - The CMS connection is read-only (the CMS Operator reports it can't write): tell the user plainly and point
